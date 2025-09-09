@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Producto Punto y Cruz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 30px;
+      background-color: #eef2f7;
+    }
+    h1 {
+      color: #222;
+    }
+    .vector {
+      margin: 10px;
+    }
+    input {
+      width: 70px;
+      text-align: center;
+      margin: 5px;
+      padding: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin: 3px;
+      padding: 5px 10px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    select {
+      padding: 8px;
+      margin: 15px;
+      border-radius: 6px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+    }
+    #proceso {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #333;
+      text-align: left;
+      display: inline-block;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora: Producto Punto y Cruz</h1>
+
+  <div class="vector">
+    <p>Vector A:</p>
+    <button onclick="cambiarValor('a1', -1)">-</button>
+    <input type="number" id="a1" value="0">
+    <button onclick="cambiarValor('a1', 1)">+</button>
+
+    <button onclick="cambiarValor('a2', -1)">-</button>
+    <input type="number" id="a2" value="0">
+    <button onclick="cambiarValor('a2', 1)">+</button>
+
+    <button onclick="cambiarValor('a3', -1)">-</button>
+    <input type="number" id="a3" value="0">
+    <button onclick="cambiarValor('a3', 1)">+</button>
+  </div>
+
+  <div class="vector">
+    <p>Vector B:</p>
+    <button onclick="cambiarValor('b1', -1)">-</button>
+    <input type="number" id="b1" value="0">
+    <button onclick="cambiarValor('b1', 1)">+</button>
+
+    <button onclick="cambiarValor('b2', -1)">-</button>
+    <input type="number" id="b2" value="0">
+    <button onclick="cambiarValor('b2', 1)">+</button>
+
+    <button onclick="cambiarValor('b3', -1)">-</button>
+    <input type="number" id="b3" value="0">
+    <button onclick="cambiarValor('b3', 1)">+</button>
+  </div>
+
+  <br>
+  <label for="operacion">Elige la operación:</label>
+  <select id="operacion">
+    <option value="punto">Producto Punto</option>
+    <option value="cruz">Producto Cruz</option>
+  </select>
+
+  <br>
+  <button onclick="calcular()">Calcular</button>
+
+  <div id="resultado"></div>
+  <div id="proceso"></div>
+
+  <script>
+    function cambiarValor(id, delta) {
+      let input = document.getElementById(id);
+      input.value = parseInt(input.value || 0) + delta;
+    }
+
+    function calcular() {
+      let a1 = parseFloat(document.getElementById("a1").value);
+      let a2 = parseFloat(document.getElementById("a2").value);
+      let a3 = parseFloat(document.getElementById("a3").value);
+
+      let b1 = parseFloat(document.getElementById("b1").value);
+      let b2 = parseFloat(document.getElementById("b2").value);
+      let b3 = parseFloat(document.getElementById("b3").value);
+
+      let operacion = document.getElementById("operacion").value;
+      let resultado = "";
+      let proceso = "";
+
+      if (operacion === "punto") {
+        // Producto punto
+        let punto = a1*b1 + a2*b2 + a3*b3;
+        resultado = `Producto Punto = ${punto}`;
+        proceso = `
+          Paso 1: Multiplicamos componente a componente:<br>
+          (${a1} × ${b1}) + (${a2} × ${b2}) + (${a3} × ${b3})<br><br>
+          Paso 2: Calculamos:<br>
+          ${a1*b1} + ${a2*b2} + ${a3*b3} = ${punto}
+        `;
+      } else {
+        // Producto cruz
+        let cx = a2*b3 - a3*b2;
+        let cy = a3*b1 - a1*b3;
+        let cz = a1*b2 - a2*b1;
+
+        resultado = `Producto Cruz = ${cx}i + ${cy}j + ${cz}k`;
+        proceso = `
+          Paso 1: Usamos la fórmula:<br>
+          (a2·b3 - a3·b2)i + (a3·b1 - a1·b3)j + (a1·b2 - a2·b1)k<br><br>
+          Paso 2: Sustituimos:<br>
+          (${a2}·${b3} - ${a3}·${b2})i + (${a3}·${b1} - ${a1}·${b3})j + (${a1}·${b2} - ${a2}·${b1})k<br><br>
+          Paso 3: Calculamos:<br>
+          (${a2*b3} - ${a3*b2})i + (${a3*b1} - ${a1*b3})j + (${a1*b2} - ${a2*b1})k<br><br>
+          Paso 4: Resultado final:<br>
+          ${cx}i + ${cy}j + ${cz}k
+        `;
+      }
+
+      document.getElementById("resultado").innerHTML = resultado;
+      document.getElementById("proceso").innerHTML = proceso;
+    }
+  </script>
+</body>
+</html>
