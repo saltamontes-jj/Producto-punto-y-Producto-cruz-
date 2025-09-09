@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Producto Punto y Cruz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 30px;
+      background-color: #eef2f7;
+    }
+    h1 {
+      color: #222;
+    }
+    input {
+      width: 70px;
+      text-align: center;
+      margin: 5px;
+      padding: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    select {
+      padding: 8px;
+      margin: 15px;
+      border-radius: 6px;
+    }
+    button {
+      margin: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora: Producto Punto y Cruz</h1>
+
+  <p>Vector A:</p>
+  <input type="number" id="a1" placeholder="x1">
+  <input type="number" id="a2" placeholder="y1">
+  <input type="number" id="a3" placeholder="z1">
+
+  <p>Vector B:</p>
+  <input type="number" id="b1" placeholder="x2">
+  <input type="number" id="b2" placeholder="y2">
+  <input type="number" id="b3" placeholder="z2">
+
+  <br>
+  <label for="operacion">Elige la operación:</label>
+  <select id="operacion">
+    <option value="punto">Producto Punto</option>
+    <option value="cruz">Producto Cruz</option>
+  </select>
+
+  <br>
+  <button onclick="calcular()">Calcular</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcular() {
+      // Obtenemos los valores
+      let a1 = parseFloat(document.getElementById("a1").value);
+      let a2 = parseFloat(document.getElementById("a2").value);
+      let a3 = parseFloat(document.getElementById("a3").value);
+
+      let b1 = parseFloat(document.getElementById("b1").value);
+      let b2 = parseFloat(document.getElementById("b2").value);
+      let b3 = parseFloat(document.getElementById("b3").value);
+
+      let operacion = document.getElementById("operacion").value;
+      let resultado = "";
+
+      if (operacion === "punto") {
+        // Producto punto
+        let punto = a1*b1 + a2*b2 + a3*b3;
+        resultado = `Producto Punto = ${punto}`;
+      } else {
+        // Producto cruz
+        let cx = a2*b3 - a3*b2;
+        let cy = a3*b1 - a1*b3;
+        let cz = a1*b2 - a2*b1;
+
+        resultado = `Producto Cruz = ${cx}i + ${cy}j + ${cz}k`;
+      }
+
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+  </script>
+</body>
+</html>
